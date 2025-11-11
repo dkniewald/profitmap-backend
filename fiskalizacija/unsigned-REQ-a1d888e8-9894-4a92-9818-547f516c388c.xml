@@ -1,0 +1,63 @@
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:efis="http://www.porezna-uprava.gov.hr/fin/2024/types/eFiskalizacija">
+    <soapenv:Header/>
+    <soapenv:Body>
+      <efis:EvidentirajERacunZahtjev efis:id="REQ-a1d888e8-9894-4a92-9818-547f516c388c" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+          <efis:Zaglavlje>
+    <efis:datumVrijemeSlanja>2025-10-17T02:33:47.8663+02:00</efis:datumVrijemeSlanja>
+    <efis:vrstaERacuna>I</efis:vrstaERacuna>
+  </efis:Zaglavlje>
+
+          <efis:ERacun>
+      <efis:brojDokumenta>INV-2025-0004</efis:brojDokumenta>
+  <efis:datumIzdavanja>2025-09-10</efis:datumIzdavanja>
+  <efis:vrstaDokumenta>380</efis:vrstaDokumenta>
+  <efis:valutaERacuna>EUR</efis:valutaERacuna>
+  <efis:vrstaPoslovnogProcesa>P1</efis:vrstaPoslovnogProcesa>
+  <efis:datumIsporuke>2025-09-10</efis:datumIsporuke>
+
+      <efis:Izdavatelj>
+    <efis:ime>Bembo doo</efis:ime>
+    <efis:oibPorezniBroj>1234564654</efis:oibPorezniBroj>
+    <efis:oibOperatera>1234564654</efis:oibOperatera>
+  </efis:Izdavatelj>
+  <efis:Primatelj>
+    <efis:ime>šmekls</efis:ime>
+    
+  </efis:Primatelj>
+
+      <efis:DokumentUkupanIznos>
+    <efis:neto>522.00</efis:neto>
+    <efis:trosak>652.50</efis:trosak>
+    <efis:iznosBezPdv>522.00</efis:iznosBezPdv>
+    <efis:pdv>130.50</efis:pdv>
+    <efis:iznosSPdv>652.50</efis:iznosSPdv>
+    <efis:iznosKojiDospijevaZaPlacanje>652.50</efis:iznosKojiDospijevaZaPlacanje>
+  </efis:DokumentUkupanIznos>
+
+    <efis:RaspodjelaPdv>  <efis:kategorijaPdv>S</efis:kategorijaPdv>
+  <efis:oporeziviIznos>522.00</efis:oporeziviIznos>
+  <efis:iznosPoreza>130.50</efis:iznosPoreza>
+  <efis:stopa>25.00</efis:stopa>
+  <efis:hrOznakaKategorijaPdv>HR:PDV25</efis:hrOznakaKategorijaPdv>
+</efis:RaspodjelaPdv>
+      <efis:StavkaERacuna>
+    <efis:kolicina>4.00</efis:kolicina>
+    <efis:jedinicaMjere>H87</efis:jedinicaMjere>
+    <efis:neto>522.00</efis:neto>
+    <efis:artiklNetoCijena>130.50</efis:artiklNetoCijena>
+    <efis:artiklBrutoCijena>145.00</efis:artiklBrutoCijena>
+    <efis:artiklKategorijaPdv>S</efis:artiklKategorijaPdv>
+    <efis:artiklStopaPdv>25.00</efis:artiklStopaPdv>
+    <efis:artiklNaziv>Guido</efis:artiklNaziv>
+    
+    <efis:artiklHrOznakaKategorijaPdv>HR:PDV25</efis:artiklHrOznakaKategorijaPdv>
+  </efis:StavkaERacuna>
+
+    <efis:indikatorKopije>false</efis:indikatorKopije>
+  </efis:ERacun>
+
+        <!-- ds:Signature (XAdES-B, enveloped) ide ovdje nakon potpisa -->
+      </efis:EvidentirajERacunZahtjev>
+    </soapenv:Body>
+  </soapenv:Envelope>

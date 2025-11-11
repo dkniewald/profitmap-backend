@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ns1:EvidentirajERacunZahtjev xmlns:ns1="http://www.porezna-uprava.gov.hr/fin/2024/types/eFiskalizacija" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" ns1:id="id-fd56e5d7192a479599610e0578f53ae1"><ns1:Zaglavlje><ns1:datumVrijemeSlanja>2025-10-31T06:22:15.601+01:00</ns1:datumVrijemeSlanja><ns1:vrstaERacuna>I</ns1:vrstaERacuna></ns1:Zaglavlje><ns1:ERacun><ns1:brojDokumenta>INV-2025-0012</ns1:brojDokumenta><ns1:datumIzdavanja>2025-10-17</ns1:datumIzdavanja><ns1:vrstaDokumenta>380</ns1:vrstaDokumenta><ns1:valutaERacuna>EUR</ns1:valutaERacuna><ns1:vrstaPoslovnogProcesa>BASIC</ns1:vrstaPoslovnogProcesa><ns1:Izdavatelj><ns1:ime>Bembo doo</ns1:ime><ns1:oibPorezniBroj>91553874211</ns1:oibPorezniBroj><ns1:oibOperatera>91553874211</ns1:oibOperatera></ns1:Izdavatelj><ns1:Primatelj><ns1:ime>mile d.o.o.</ns1:ime><ns1:oibPorezniBroj>12312312356</ns1:oibPorezniBroj></ns1:Primatelj><ns1:DokumentUkupanIznos><ns1:neto>217.50</ns1:neto><ns1:iznosBezPdv>217.50</ns1:iznosBezPdv><ns1:pdv>72.50</ns1:pdv><ns1:iznosSPdv>290.00</ns1:iznosSPdv><ns1:iznosKojiDospijevaZaPlacanje>290.00</ns1:iznosKojiDospijevaZaPlacanje></ns1:DokumentUkupanIznos><ns1:RaspodjelaPdv><ns1:kategorijaPdv>S</ns1:kategorijaPdv><ns1:oporeziviIznos>217.50</ns1:oporeziviIznos><ns1:iznosPoreza>72.50</ns1:iznosPoreza><ns1:stopa>25.0</ns1:stopa></ns1:RaspodjelaPdv><ns1:StavkaERacuna><ns1:kolicina>2</ns1:kolicina><ns1:jedinicaMjere>C62</ns1:jedinicaMjere><ns1:neto>290.00</ns1:neto><ns1:artiklNetoCijena>145.00</ns1:artiklNetoCijena><ns1:artiklKategorijaPdv>S</ns1:artiklKategorijaPdv><ns1:artiklStopaPdv>25.0</ns1:artiklStopaPdv><ns1:artiklNaziv>Guido</ns1:artiklNaziv><ns1:artiklOpis/></ns1:StavkaERacuna><ns1:indikatorKopije>false</ns1:indikatorKopije></ns1:ERacun><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="signature-ddc4c371-8c8c-41e8-a948-b08b2b748978">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+<ds:Reference URI="#id-fd56e5d7192a479599610e0578f53ae1">
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+<ds:DigestValue>KfVzt5k/y04BNpELgr6AeciZ7B7jUzEjEMfuBgmrfYU=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference Type="http://uri.etsi.org/01903#SignedProperties" URI="#signedproperties-c9c882ba-06a7-4995-a591-ab47af9f229e">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+<ds:DigestValue>6VM9RquttIWPHv83GY+2dbuzNvt0pzVg+eGHY1+0SFs=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>
+fAi92TXhhW1nxYVHv9c5Z6dezRPrYQJPP6VyPvN+vFZ+7bf+5HG29+R47AgihqFwNJB7lRdHTXUo&#13;
+7jYsKwz/eaArQDpzrR+fpiIdvTgtDHAORX3v0fP7O3pYQQy0itTq5Zrec98QO472kxNqcqxapJbV&#13;
+C5tjYuDGlKQCyZo2NmrfXzn2lgsN+aWudn91u8Ji6GvQBGk7zRwvjMVYVHcRvwOKFbJ+pc9wdPJH&#13;
+yGuaDwtGWnogOD/vw9HsrYnaFY+Ld/XyIUk7KxjQ4aJxEW/fwZ7CkbNEc2v/QJ0b096h0qVX8TuT&#13;
+cdfurJXqf7ws+/hUf/Dpp76JUqSKXaMjq6L7NA==
+</ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>
+MIIGvzCCBKegAwIBAgIRAN4weoMTAcxY5EJ6Q8kdGtYwDQYJKoZIhvcNAQELBQAwSDELMAkGA1UE&#13;
+BhMCSFIxHTAbBgNVBAoTFEZpbmFuY2lqc2thIGFnZW5jaWphMRowGAYDVQQDExFGaW5hIERlbW8g&#13;
+Q0EgMjAyMDAeFw0yNTA5MTgxMjEzNTJaFw0zMDA3MzExMjMwMThaMGoxCzAJBgNVBAYTAkhSMR4w&#13;
+HAYDVQQKExVLTklYIFZMLkxVS0EgS05JRVdBTEQxFjAUBgNVBGETDUhSOTE1NTM4NzQyMTExDzAN&#13;
+BgNVBAcTBlpBR1JFQjESMBAGA1UEAxMJUHJvZml0TWFwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A&#13;
+MIIBCgKCAQEAyzRw4MXUXvokrtoVmec/cOxExE/9YOjBsJYbZOJ4yKjf9/zWZmxRhz1ffswpo/7e&#13;
+iCqEa262lyyBV06b6iF2+MCBZ6VHTzl0A1KXdHnFOXzWaYWqJ97oLIcoFADFZXhW8GdrB2C30cVB&#13;
+DHkqLU5/fTChfA9qQFE8wG7IufLbYtQxe698usVVE5fZwWWuhfB/Fvl7Hx11ATRuA0CEFEXGyQfM&#13;
+utLsJdTv9y4zleffUnMHNjXA+fLEqnReAwfvwQ7ZkzpvODkf97/UzZouRgjUL2olezpnNoWSjjQ3&#13;
+pJ4XwpozJchPlzH4MX9/dx1ToneTto2NDyWtvNO0EhdRousq0wIDAQABo4ICgDCCAnwwDgYDVR0P&#13;
+AQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMEBggrBgEFBQcDAjCBrAYDVR0gBIGkMIGhMIGU&#13;
+BgkrfIhQBSEPAwEwgYYwQQYIKwYBBQUHAgEWNWh0dHA6Ly9kZW1vLXBraS5maW5hLmhyL2Nwcy9j&#13;
+cHNucWNkZW1vMjAxNHYyLTAtaHIucGRmMEEGCCsGAQUFBwIBFjVodHRwOi8vZGVtby1wa2kuZmlu&#13;
+YS5oci9jcHMvY3BzbnFjZGVtbzIwMTR2Mi0wLWVuLnBkZjAIBgYEAI96AQEwfQYIKwYBBQUHAQEE&#13;
+cTBvMCgGCCsGAQUFBzABhhxodHRwOi8vZGVtbzIwMTQtb2NzcC5maW5hLmhyMEMGCCsGAQUFBzAC&#13;
+hjdodHRwOi8vZGVtby1wa2kuZmluYS5oci9jZXJ0aWZpa2F0aS9kZW1vMjAyMF9zdWJfY2EuY2Vy&#13;
+MBsGA1UdEQQUMBKBEGx1a2FAa25peC5hZ2VuY3kwgbQGA1UdHwSBrDCBqTCBpqCBo6CBoIYoaHR0&#13;
+cDovL2RlbW8tcGtpLmZpbmEuaHIvY3JsL2RlbW8yMDIwLmNybIZ0bGRhcDovL2RlbW8tbGRhcC5m&#13;
+aW5hLmhyL2NuPUZpbmElMjBEZW1vJTIwQ0ElMjAyMDIwLG89RmluYW5jaWpza2ElMjBhZ2VuY2lq&#13;
+YSxjPUhSP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3QlM0JiaW5hcnkwHwYDVR0jBBgwFoAUla9S&#13;
+1cLp1zeEPm5Jj8kf6lwrX88wHQYDVR0OBBYEFEhC3OPJAv2YcqSjIiOAgROfdGyAMAkGA1UdEwQC&#13;
+MAAwDQYJKoZIhvcNAQELBQADggIBAD8mRwc4KJ8/gmiZqN0wY2q8STi/6bGD6YZNXDirLc/MbPlG&#13;
++kNb33hVSTCruVFT8WSS0Mo8U9/LTr0GsKSBeNg9W4Gn3VzXO05e+fWKnS6C4EnrxjTAr1PoDcZs&#13;
+eCF+m85+Kb3VI/g8pMbDhu+510Fdwpm4f5zy1xyBrU/THM8zqenIoXs34P2afS83EPmpZuV6J+Uj&#13;
+vDezMRwlZYA8p4TYz9WvRNNsNy0HNgZyduH/4QHaDWtVj9M7905WFdJYLfq8+sDktFM0NQRrLJxT&#13;
+iOJn7q/RrXR2lCtAVkvFCCzXW7vOxL7LYEEiiAFX5+FAhVgJEiXGxiwe5YBISSTmO0qGngWeDyIC&#13;
+zl3BGMfMM1jJAW/qMtdnKra3tZL4g5+r0KkqI30DFwGkAIpPeiR3D4NBpK27jHPY33zDpxXg0uos&#13;
+Z3tAphX5AfaQx5elV12ntz6xTdx/5Lxcz7XeCRJAn0Ka2BR1Wt+T+2n3TPhbUyWVvKmlphRXIMQl&#13;
+OjXGuYcns9eB7bH0LxX+s8r+wSbdgzJ7u16D1IoyxVLL+fyFlBnbav+29cMnTKIfv8SAdYPf0ses&#13;
+QguHwrqKQ1GZ50gqmX0pdL3al4cu+HbO6CHuzFTLnKsH8eOz1kakoroQoPWFVccGA2lO5TKY/JRu&#13;
+lqXY3Uuse21tnf1mwJCxacPXWD7O
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+<ds:Object><xades:QualifyingProperties xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" xmlns:xades141="http://uri.etsi.org/01903/v1.4.1#" Target="#signature-ddc4c371-8c8c-41e8-a948-b08b2b748978"><xades:SignedProperties Id="signedproperties-c9c882ba-06a7-4995-a591-ab47af9f229e"><xades:SignedSignatureProperties><xades:SigningTime>2025-10-31T06:22:53.102+01:00</xades:SigningTime><xades:SigningCertificate><xades:Cert><xades:CertDigest><ns2:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ns2:DigestValue>QG1W5ftlQAmzidBGOKPSfOWVxsjMCbmHkaIyiJQR358=</ns2:DigestValue></xades:CertDigest><xades:IssuerSerial><ns2:X509IssuerName>cn=Fina Demo CA 2020,o=Financijska agencija,c=HR</ns2:X509IssuerName><ns2:X509SerialNumber>295340330152204319498183575574629128918</ns2:X509SerialNumber></xades:IssuerSerial></xades:Cert></xades:SigningCertificate></xades:SignedSignatureProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object>
+</ds:Signature></ns1:EvidentirajERacunZahtjev>

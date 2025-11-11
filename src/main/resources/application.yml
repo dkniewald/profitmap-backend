@@ -1,0 +1,19 @@
+spring:
+  mail:
+    host: smtp.zoho.eu        # ili smtp.zoho.com ako nisi na EU data centru
+    port: 587
+    username: hello@profitmap.app
+    password: "9%Xj4M6uKAi3!%x" #${MAIL_PASSWORD}    lozinka ili app password iz Zoho Maila
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+mail:
+  from-address: "hello@profitmap.app"
+  system-from-address: "hello@profitmap.app"
+  app-name: "ProfitMap"
+  activation-base-url: "https://app.profitmap.app/auth/activate"
+

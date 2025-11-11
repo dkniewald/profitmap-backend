@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Aktivacija računa</title>
+  </head>
+  <body>
+    <p>Pozdrav <span th:text="${userName}">korisniče</span>,</p>
+    <p>
+      Hvala što ste se registrirali u
+      <b th:text="${appName}">Naša aplikacija</b>.
+    </p>
+    <p>
+      Za aktivaciju računa kliknite na sljedeći link:<br />
+      <a th:href="${activationLink}" th:text="${activationLink}">
+        Aktiviraj račun
+      </a>
+    </p>
+    <p>
+      Ako poveznica ne radi, kopirajte je ručno u adresnu traku preglednika.
+    </p>
+    <hr />
+    <p style="font-size: 12px; color: #777;">
+      Ovaj email je generiran automatski putem
+      <span th:text="${appName}">MyApp</span>.
+      Molimo ne odgovarajte na ovu poruku.
+    </p>
+  </body>
+</html>
+

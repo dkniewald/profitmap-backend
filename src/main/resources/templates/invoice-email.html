@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Račun</title>
+  </head>
+  <body>
+    <p>
+      Poštovani
+      <span th:text="${customerName}">klijente</span>,
+    </p>
+    <p>
+      U privitku Vam šaljemo račun br.
+      <b th:text="${invoiceNumber}">0001-2025</b>
+      od tvrtke
+      <b th:text="${issuerCompanyName}">Naziv tvrtke</b>.
+    </p>
+    <p>
+      Molimo da račun podmirite do datuma dospijeća navedenog na računu.
+    </p>
+    <p>
+      Račun je u privitku u obliku PDF dokumenta.
+    </p>
+    <br />
+    <p>
+      Lijep pozdrav,<br />
+      <span th:text="${issuerCompanyName}">Naziv tvrtke</span>
+    </p>
+    <hr />
+    <p style="font-size: 12px; color: #777;">
+      Ovaj račun je poslan putem
+      <span th:text="${appName}">MyApp</span>
+      aplikacije za fakturiranje.
+    </p>
+  </body>
+</html>
+

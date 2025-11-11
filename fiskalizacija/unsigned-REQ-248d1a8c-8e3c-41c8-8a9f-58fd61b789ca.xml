@@ -1,0 +1,63 @@
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:efis="http://www.porezna-uprava.gov.hr/fin/2024/types/eFiskalizacija">
+    <soapenv:Header/>
+    <soapenv:Body>
+      <efis:EvidentirajERacunZahtjev efis:id="REQ-248d1a8c-8e3c-41c8-8a9f-58fd61b789ca" xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+          <efis:Zaglavlje>
+    <efis:datumVrijemeSlanja>2025-10-17T02:45:16.2399+02:00</efis:datumVrijemeSlanja>
+    <efis:vrstaERacuna>I</efis:vrstaERacuna>
+  </efis:Zaglavlje>
+
+          <efis:ERacun>
+      <efis:brojDokumenta>INV-2025-0011</efis:brojDokumenta>
+  <efis:datumIzdavanja>2025-10-16</efis:datumIzdavanja>
+  <efis:vrstaDokumenta>380</efis:vrstaDokumenta>
+  <efis:valutaERacuna>EUR</efis:valutaERacuna>
+  <efis:vrstaPoslovnogProcesa>P1</efis:vrstaPoslovnogProcesa>
+  <efis:datumIsporuke>2025-10-16</efis:datumIsporuke>
+
+      <efis:Izdavatelj>
+    <efis:ime>Bembo doo</efis:ime>
+    <efis:oibPorezniBroj>1234564654</efis:oibPorezniBroj>
+    <efis:oibOperatera>1234564654</efis:oibOperatera>
+  </efis:Izdavatelj>
+  <efis:Primatelj>
+    <efis:ime>Jaki</efis:ime>
+    
+  </efis:Primatelj>
+
+      <efis:DokumentUkupanIznos>
+    <efis:neto>69.00</efis:neto>
+    <efis:trosak>86.25</efis:trosak>
+    <efis:iznosBezPdv>69.00</efis:iznosBezPdv>
+    <efis:pdv>17.25</efis:pdv>
+    <efis:iznosSPdv>86.25</efis:iznosSPdv>
+    <efis:iznosKojiDospijevaZaPlacanje>86.25</efis:iznosKojiDospijevaZaPlacanje>
+  </efis:DokumentUkupanIznos>
+
+    <efis:RaspodjelaPdv>  <efis:kategorijaPdv>S</efis:kategorijaPdv>
+  <efis:oporeziviIznos>69.00</efis:oporeziviIznos>
+  <efis:iznosPoreza>17.25</efis:iznosPoreza>
+  <efis:stopa>25.00</efis:stopa>
+  <efis:hrOznakaKategorijaPdv>HR:PDV25</efis:hrOznakaKategorijaPdv>
+</efis:RaspodjelaPdv>
+      <efis:StavkaERacuna>
+    <efis:kolicina>1.00</efis:kolicina>
+    <efis:jedinicaMjere>H87</efis:jedinicaMjere>
+    <efis:neto>69.00</efis:neto>
+    <efis:artiklNetoCijena>69.00</efis:artiklNetoCijena>
+    
+    <efis:artiklKategorijaPdv>S</efis:artiklKategorijaPdv>
+    <efis:artiklStopaPdv>25.00</efis:artiklStopaPdv>
+    <efis:artiklNaziv>Bembo</efis:artiklNaziv>
+    <efis:artiklOpis>setup vsc</efis:artiklOpis>
+    <efis:artiklHrOznakaKategorijaPdv>HR:PDV25</efis:artiklHrOznakaKategorijaPdv>
+  </efis:StavkaERacuna>
+
+    <efis:indikatorKopije>false</efis:indikatorKopije>
+  </efis:ERacun>
+
+        <!-- ds:Signature (XAdES-B, enveloped) ide ovdje nakon potpisa -->
+      </efis:EvidentirajERacunZahtjev>
+    </soapenv:Body>
+  </soapenv:Envelope>

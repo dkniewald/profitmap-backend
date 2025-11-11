@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><soapenv:Envelope xmlns:efis="http://www.porezna-uprava.gov.hr/fin/2024/types/eFiskalizacija" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body>
+      <efis:EvidentirajERacunZahtjev xmlns:xd="http://www.w3.org/2000/09/xmldsig#" Id="REQ-a1d888e8-9894-4a92-9818-547f516c388c" efis:id="REQ-a1d888e8-9894-4a92-9818-547f516c388c">
+          <efis:Zaglavlje>
+    <efis:datumVrijemeSlanja>2025-10-17T02:33:47.8663+02:00</efis:datumVrijemeSlanja>
+    <efis:vrstaERacuna>I</efis:vrstaERacuna>
+  </efis:Zaglavlje>
+
+          <efis:ERacun>
+      <efis:brojDokumenta>INV-2025-0004</efis:brojDokumenta>
+  <efis:datumIzdavanja>2025-09-10</efis:datumIzdavanja>
+  <efis:vrstaDokumenta>380</efis:vrstaDokumenta>
+  <efis:valutaERacuna>EUR</efis:valutaERacuna>
+  <efis:vrstaPoslovnogProcesa>P1</efis:vrstaPoslovnogProcesa>
+  <efis:datumIsporuke>2025-09-10</efis:datumIsporuke>
+
+      <efis:Izdavatelj>
+    <efis:ime>Bembo doo</efis:ime>
+    <efis:oibPorezniBroj>1234564654</efis:oibPorezniBroj>
+    <efis:oibOperatera>1234564654</efis:oibOperatera>
+  </efis:Izdavatelj>
+  <efis:Primatelj>
+    <efis:ime>šmekls</efis:ime>
+    
+  </efis:Primatelj>
+
+      <efis:DokumentUkupanIznos>
+    <efis:neto>522.00</efis:neto>
+    <efis:trosak>652.50</efis:trosak>
+    <efis:iznosBezPdv>522.00</efis:iznosBezPdv>
+    <efis:pdv>130.50</efis:pdv>
+    <efis:iznosSPdv>652.50</efis:iznosSPdv>
+    <efis:iznosKojiDospijevaZaPlacanje>652.50</efis:iznosKojiDospijevaZaPlacanje>
+  </efis:DokumentUkupanIznos>
+
+    <efis:RaspodjelaPdv>  <efis:kategorijaPdv>S</efis:kategorijaPdv>
+  <efis:oporeziviIznos>522.00</efis:oporeziviIznos>
+  <efis:iznosPoreza>130.50</efis:iznosPoreza>
+  <efis:stopa>25.00</efis:stopa>
+  <efis:hrOznakaKategorijaPdv>HR:PDV25</efis:hrOznakaKategorijaPdv>
+</efis:RaspodjelaPdv>
+      <efis:StavkaERacuna>
+    <efis:kolicina>4.00</efis:kolicina>
+    <efis:jedinicaMjere>H87</efis:jedinicaMjere>
+    <efis:neto>522.00</efis:neto>
+    <efis:artiklNetoCijena>130.50</efis:artiklNetoCijena>
+    <efis:artiklBrutoCijena>145.00</efis:artiklBrutoCijena>
+    <efis:artiklKategorijaPdv>S</efis:artiklKategorijaPdv>
+    <efis:artiklStopaPdv>25.00</efis:artiklStopaPdv>
+    <efis:artiklNaziv>Guido</efis:artiklNaziv>
+    
+    <efis:artiklHrOznakaKategorijaPdv>HR:PDV25</efis:artiklHrOznakaKategorijaPdv>
+  </efis:StavkaERacuna>
+
+    <efis:indikatorKopije>false</efis:indikatorKopije>
+  </efis:ERacun>
+
+        <!-- ds:Signature (XAdES-B, enveloped) ide ovdje nakon potpisa -->
+      </efis:EvidentirajERacunZahtjev>
+    </soapenv:Body>
+  <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="id-fc64bd56727f678e4eca8670c596d0b7"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference Id="r-id-fc64bd56727f678e4eca8670c596d0b7-1" URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2002/06/xmldsig-filter2"><dsig-filter2:XPath xmlns:dsig-filter2="http://www.w3.org/2002/06/xmldsig-filter2" Filter="subtract">/descendant::ds:Signature</dsig-filter2:XPath></ds:Transform><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>YHubmfw28VwxtkwpRqY6Xh3O64cQHsb7fWVSblYVqSk=</ds:DigestValue></ds:Reference><ds:Reference Type="http://uri.etsi.org/01903#SignedProperties" URI="#xades-id-fc64bd56727f678e4eca8670c596d0b7"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>dQdvz+J/qpILX2x7aD1bmTixNFEEcOiW/wFRWqToOPg=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue Id="value-id-fc64bd56727f678e4eca8670c596d0b7">g+d2pltCQTtmB/zyV9hcNW6AB5ry1ZcjxoSTr6hqsSs+2nwfPFB5JXMbmpBXDFSNZcgteucb7zr0Z/1Ue5/wTYLGmYyzDD+e2wvz1+vr3ATveb62WDSIxGNbzSxQ9JqdF0XyeirMAcDkNfgZ4NoSp6nk67NtGHyO8T0JhenyY+mdmIpxA9DVJ2JEuD4QRIIcYrwfGgl0ZJsmDHS5P9BZvtvpiH2EKke2DIzznqxJjGctOBpx2+7JzC+H6s2lyyXFsiGvSav6yyTAzfSg3QB38a7QbWmX9D1gn5wnCR6B2BoiYuBMaUeCjb1eLw7b0tsLtD4Q5xgPSdgihA+YaHNyEg==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo><ds:Object><xades:QualifyingProperties xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" Target="#id-fc64bd56727f678e4eca8670c596d0b7"><xades:SignedProperties Id="xades-id-fc64bd56727f678e4eca8670c596d0b7"><xades:SignedSignatureProperties><xades:SigningTime>2025-10-17T00:33:48Z</xades:SigningTime><xades:SigningCertificateV2><xades:Cert><xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><ds:DigestValue>hdylxJyUdq6GK0HmFJbsHMoVXlbrsMHF6LyceBlsvIGvhbJkXbGWg1RQPR+TeLeB4xZAS5JLyn8M+X9jKVJNtQ==</ds:DigestValue></xades:CertDigest><xades:IssuerSerialV2>MGEwTKRKMEgxCzAJBgNVBAYTAkhSMR0wGwYDVQQKExRGaW5hbmNpanNrYSBhZ2VuY2lqYTEaMBgGA1UEAxMRRmluYSBEZW1vIENBIDIwMjACEQDeMHqDEwHMWORCekPJHRrW</xades:IssuerSerialV2></xades:Cert></xades:SigningCertificateV2></xades:SignedSignatureProperties><xades:SignedDataObjectProperties><xades:DataObjectFormat ObjectReference="#r-id-fc64bd56727f678e4eca8670c596d0b7-1"><xades:MimeType>application/octet-stream</xades:MimeType></xades:DataObjectFormat></xades:SignedDataObjectProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object></ds:Signature></soapenv:Envelope>
