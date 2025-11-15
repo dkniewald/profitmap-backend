@@ -28,6 +28,9 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Query("SELECT d FROM Document d JOIN FETCH d.company WHERE d.id = :documentId AND d.deletedAt IS NULL")
     Optional<Document> findByIdWithCompany(@Param("documentId") Long documentId);
     
+    @Query("SELECT d FROM Document d JOIN FETCH d.company JOIN FETCH d.documentClient WHERE d.id = :documentId AND d.deletedAt IS NULL")
+    Optional<Document> findByIdWithCompanyAndClient(@Param("documentId") Long documentId);
+    
     @Query("SELECT d FROM Document d JOIN FETCH d.company WHERE d.company.id = :companyId AND d.deletedAt IS NULL ORDER BY d.documentDate DESC")
     List<Document> findActiveDocumentsByCompanyWithCompany(@Param("companyId") Long companyId);
     

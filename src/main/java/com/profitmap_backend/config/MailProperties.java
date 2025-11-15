@@ -45,8 +45,15 @@ public class MailProperties {
 
     /**
      * System sender address used for activation and other system emails.
+     * Must match the SMTP username configured in spring.mail.username
      */
     private String systemFromAddress;
+    
+    /**
+     * SMTP username from Spring Boot mail configuration.
+     * This is read from spring.mail.username to ensure From address matches.
+     */
+    private String smtpUsername;
 
     /**
      * Application display name (e.g. "MyApp" or "ProfitMap").
@@ -57,5 +64,20 @@ public class MailProperties {
      * Base URL used when building activation links.
      */
     private String activationBaseUrl;
+
+    /**
+     * Optional second mail account configuration.
+     */
+    private SecondAccount secondAccount;
+
+    @Getter
+    @Setter
+    public static class SecondAccount {
+        private String host;
+        private Integer port;
+        private String username;
+        private String password;
+        private String fromAddress;
+    }
 }
 

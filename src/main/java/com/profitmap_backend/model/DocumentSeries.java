@@ -32,6 +32,10 @@ public class DocumentSeries {
     @Column(name = "next_number", nullable = false)
     private Long nextNumber;
 
+    @Column(name = "document_count", nullable = false)
+    @Builder.Default
+    private Long documentCount = 0L;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

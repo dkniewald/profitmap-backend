@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ponuda</title>
+  </head>
+  <body>
+    <p>
+      Poštovani
+      <span th:text="${customerName}">klijente</span>,
+    </p>
+    <p>
+      U privitku Vam šaljemo ponudu br.
+      <b th:text="${documentNumber}">OFF-2025-0001</b>
+      od tvrtke
+      <b th:text="${issuerCompanyName}">Naziv tvrtke</b>.
+    </p>
+    <p>
+      Molimo da razmotrite našu ponudu i kontaktirajte nas ukoliko imate pitanja.
+    </p>
+    <p>
+      Ponuda je u privitku u obliku PDF dokumenta.
+    </p>
+    <br />
+    <p>
+      Lijep pozdrav,<br />
+      <span th:text="${issuerCompanyName}">Naziv tvrtke</span>
+    </p>
+    <hr />
+    <p style="font-size: 12px; color: #777;">
+      Ova ponuda je poslana putem
+      <span th:text="${appName}">MyApp</span>
+      aplikacije za fakturiranje.
+    </p>
+  </body>
+</html>
+

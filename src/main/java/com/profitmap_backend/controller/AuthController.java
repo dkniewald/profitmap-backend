@@ -71,7 +71,7 @@ public class AuthController {
         UserDto userDto = new UserDto(
                 user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(),
                 user.getCountry(), user.getDateOfBirth(), user.getPhoneNumber(), 
-                user.getCompany() != null ? user.getCompany().getId() : null, 
+                user.getCompany() != null ? user.getCompany().getId() : null, user.getStatus(),
                 user.getCreatedAt(), user.getUpdatedAt(), user.getRoles()
         );
 

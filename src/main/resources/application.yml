@@ -10,10 +10,18 @@ spring:
           auth: true
           starttls:
             enable: true
+          from: hello@profitmap.app  # Envelope sender must match SMTP username for Zoho
 
 mail:
   from-address: "hello@profitmap.app"
   system-from-address: "hello@profitmap.app"
   app-name: "ProfitMap"
   activation-base-url: "https://app.profitmap.app/auth/activate"
+  # Second Zoho mail account configuration (optional)
+  second-account:
+    host: smtp.zoho.eu
+    port: 587
+    username: no-reply@profitmap.app
+    password: "hn4f@zvT" #${SECOND_MAIL_PASSWORD}
+    from-address: "no-reply@profitmap.app"
 

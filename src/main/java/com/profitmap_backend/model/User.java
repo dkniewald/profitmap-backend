@@ -51,6 +51,11 @@ public class User {
     @Builder.Default
     private Set<UserRole> roles = new HashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    @Builder.Default
+    private UserStatus status = UserStatus.PENDING;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

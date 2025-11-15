@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Aktivacija računa</title>
+  </head>
+  <body>
+    <p>
+      Pozdrav
+      <span th:text="${userName}">korisniče</span>,
+    </p>
+    <p>
+      Hvala što ste se registrirali u
+      <b th:text="${appName}">ProfitMap</b>.
+    </p>
+    <p>
+      Za aktivaciju računa kliknite na sljedeći link:
+    </p>
+    <p>
+      <a th:href="${activationLink}" style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">
+        Aktiviraj račun
+      </a>
+    </p>
+    <p>
+      Ili kopirajte sljedeću poveznicu u adresnu traku preglednika:<br />
+      <span style="color: #007bff; word-break: break-all;" th:text="${activationLink}">activation link</span>
+    </p>
+    <p>
+      <strong>Napomena:</strong> Poveznica vrijedi 24 sata. Nakon toga ćete morati zatražiti novu aktivacijsku poveznicu.
+    </p>
+    <hr />
+    <p style="font-size: 12px; color: #777;">
+      Ovaj email je generiran automatski putem
+      <span th:text="${appName}">ProfitMap</span>.
+      Molimo ne odgovarajte na ovu poruku.
+    </p>
+  </body>
+</html>
+

@@ -41,15 +41,18 @@ public class DocumentService {
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new RuntimeException("Company not found"));
         
-        // Get prefix and year based on document type
+        // Get prefix, year, and start number based on document type
         String prefix;
         String year;
+        Long startNumber;
         if (documentType == DocumentType.OFFER) {
             prefix = company.getOfferPrefix();
             year = company.getOfferYear();
+            startNumber = company.getOfferStartNumber() != null ? company.getOfferStartNumber() : 1L;
         } else if (documentType == DocumentType.INVOICE) {
             prefix = company.getInvoicePrefix();
             year = company.getInvoiceYear();
+            startNumber = company.getInvoiceStartNumber() != null ? company.getInvoiceStartNumber() : 1L;
         } else {
             throw new IllegalArgumentException("Unsupported document type: " + documentType);
         }
@@ -63,20 +66,37 @@ public class DocumentService {
             // Increment the next number
             series.setNextNumber(series.getNextNumber() + 1);
         } else {
-            // Create new series starting from 1
+            // Create new series starting from configured start number
             series = DocumentSeries.builder()
                     .companyId(companyId)
                     .prefix(prefix)
                     .year(year)
-                    .nextNumber(1L)
+                    .nextNumber(startNumber)
+                    .documentCount(0L)
                     .build();
         }
         
+        // Get separator from company (default to "-" if not set)
+        String separator = company.getDocumentSeparator() != null && !company.getDocumentSeparator().isEmpty() 
+            ? company.getDocumentSeparator() 
+            : "-";
+        
+        // Generate the document number using company's separator
+        // Format differs by document type:
+        // OFFER: prefix-separator-year-separator-number (e.g., OFF-2025-0001)
+        // INVOICE: number-separator-prefix-separator-year (e.g., 0001-INV-2025)
+        String documentNumber;
+        if (documentType == DocumentType.OFFER) {
+            documentNumber = String.format("%s%s%s%s%04d", prefix, separator, year, separator, series.getNextNumber());
+        } else {
+            documentNumber = String.format("%04d%s%s%s%s", series.getNextNumber(), separator, prefix, separator, year);
+        }
+        
+        // Increment document counter (tracks how many documents have been created for this series)
+        series.setDocumentCount(series.getDocumentCount() + 1);
+        
         // Save the series (this will either update existing or create new)
         series = documentSeriesRepository.save(series);
-        
-        // Generate the document number
-        String documentNumber = String.format("%s-%s-%04d", prefix, year, series.getNextNumber());
         
         log.info("Generated document number: {} for company: {}", documentNumber, companyId);
         return documentNumber;
@@ -238,6 +258,15 @@ public class DocumentService {
     @Transactional(readOnly = true)
     public Document getDocumentByIdWithCompany(Long documentId) {
         return documentRepository.findByIdWithCompany(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found with id: " + documentId));
+    }
+    
+    /**
+     * Gets a document by ID with company and client eagerly fetched (avoids lazy loading issues)
+     */
+    @Transactional(readOnly = true)
+    public Document getDocumentByIdWithCompanyAndClient(Long documentId) {
+        return documentRepository.findByIdWithCompanyAndClient(documentId)
                 .orElseThrow(() -> new RuntimeException("Document not found with id: " + documentId));
     }
 

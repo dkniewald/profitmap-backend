@@ -1,5 +1,6 @@
 package com.profitmap_backend.dto;
 
+import com.profitmap_backend.model.CompanyStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -25,10 +26,14 @@ public class CompanyDto {
     private String phone;
     private String email;
     private String logoPath;
+    private CompanyStatus status;
     private String offerPrefix;
     private String offerYear;
     private String invoicePrefix;
     private String invoiceYear;
+    private Long invoiceStartNumber;
+    private Long offerStartNumber;
+    private String documentSeparator;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

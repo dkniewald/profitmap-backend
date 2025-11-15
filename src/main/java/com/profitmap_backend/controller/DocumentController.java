@@ -1,5 +1,6 @@
 package com.profitmap_backend.controller;
 
+import com.profitmap_backend.config.MailProperties;
 import com.profitmap_backend.dto.DocumentDto;
 import com.profitmap_backend.model.*;
 import com.profitmap_backend.service.DocumentService;
@@ -9,8 +10,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,6 +26,7 @@ public class DocumentController {
     
     private final DocumentService documentService;
     private final MailService mailService;
+    private final MailProperties mailProperties;
     
     @PostMapping("/offers")
     @Transactional
@@ -66,6 +72,91 @@ public class DocumentController {
 */
         DocumentDto documentDto = DocumentMapper.toDto(createdDocument);
         return ResponseEntity.ok(documentDto);
+    }
+
+    /**
+     * Send email with PDF attachment for an existing document
+     */
+    @PostMapping(value = "/{documentId}/send-email", consumes = "multipart/form-data")
+    @Transactional(readOnly = true)
+    public ResponseEntity<Void> sendDocumentEmail(
+            @PathVariable Long documentId,
+            @RequestPart("pdf") MultipartFile pdfFile) {
+        
+        // Get document with company and client info
+        Document document = documentService.getDocumentByIdWithCompanyAndClient(documentId);
+        
+        // Get client email from document
+        String clientEmail = document.getDocumentClient().getEmail();
+        if (clientEmail == null || clientEmail.isBlank()) {
+            throw new RuntimeException("Document client email is not set");
+        }
+        
+        try {
+            byte[] pdfBytes = pdfFile.getBytes();
+            String pdfFileName = pdfFile.getOriginalFilename();
+            if (pdfFileName == null || pdfFileName.isBlank()) {
+                pdfFileName = document.getDocumentType() == DocumentType.INVOICE 
+                    ? "Racun-" + document.getDocumentNumber() + ".pdf"
+                    : "Ponuda-" + document.getDocumentNumber() + ".pdf";
+            }
+            
+            // Get company info
+            Company company = document.getCompany();
+            String issuerCompanyName = company.getCompanyName();
+            String issuerEmail = company.getEmail() != null ? company.getEmail() : null;
+            
+            // Get client info
+            DocumentClient documentClient = document.getDocumentClient();
+            String customerName = documentClient.getName();
+            if (documentClient.getSurname() != null && !documentClient.getSurname().isBlank()) {
+                customerName = customerName + " " + documentClient.getSurname();
+            }
+            
+            // Prepare template variables
+            Map<String, Object> templateVariables = new HashMap<>();
+            templateVariables.put("customerName", customerName);
+            templateVariables.put("issuerCompanyName", issuerCompanyName);
+            templateVariables.put("appName", mailProperties.getAppName());
+            
+            // Send email based on document type
+            if (document.getDocumentType() == DocumentType.INVOICE) {
+                templateVariables.put("invoiceNumber", document.getDocumentNumber());
+                String subject = String.format("Račun br. %s – %s", document.getDocumentNumber(), issuerCompanyName);
+                String personalName = issuerCompanyName + " (via " + mailProperties.getAppName() + ")";
+                
+                mailService.sendHtmlMailWithPdfAttachmentSecondAccount(
+                        clientEmail,
+                        subject,
+                        "invoice-email",
+                        templateVariables,
+                        pdfBytes,
+                        pdfFileName,
+                        issuerEmail,
+                        personalName
+                );
+            } else if (document.getDocumentType() == DocumentType.OFFER) {
+                templateVariables.put("documentNumber", document.getDocumentNumber());
+                String subject = "Ponuda br. " + document.getDocumentNumber() + " – " + issuerCompanyName;
+                
+                mailService.sendHtmlMailWithPdfAttachmentSecondAccount(
+                        clientEmail,
+                        subject,
+                        "offer-email",
+                        templateVariables,
+                        pdfBytes,
+                        pdfFileName,
+                        issuerEmail,
+                        issuerCompanyName
+                );
+            } else {
+                throw new RuntimeException("Unsupported document type: " + document.getDocumentType());
+            }
+            
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to process PDF file for email", e);
+        }
     }
     
     @GetMapping("/company/{companyId}")
@@ -117,14 +208,7 @@ public class DocumentController {
         Document updatedDocument = documentService.updateDocumentStatus(documentId, status);
         DocumentDto documentDto = DocumentMapper.toDto(updatedDocument);
 
-        if (updatedDocument.getDocumentType() == DocumentType.INVOICE
-                && updatedDocument.getStatus() != DocumentStatus.DRAFT) {
-            try {
-                mailService.sendTestMail();
-            } catch (Exception e) {
-                throw new RuntimeException("Fiskalizacija failed for document ID: " + updatedDocument.getId(), e);
-            }
-        }
+    
 
         return ResponseEntity.ok(documentDto);
     }

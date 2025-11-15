@@ -45,9 +45,10 @@ public class Company {
     @Builder.Default
     private Boolean isDemo = true;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     @Builder.Default
-    private Boolean isActive = true;
+    private CompanyStatus status = CompanyStatus.ACTIVE;
 
     @Column(nullable = false)
     private Double percentagePdv;
@@ -80,6 +81,18 @@ public class Company {
 
     @Column(name = "invoice_year", nullable = false)
     private String invoiceYear;
+
+    @Column(name = "invoice_start_number")
+    @Builder.Default
+    private Long invoiceStartNumber = 1L;
+
+    @Column(name = "offer_start_number")
+    @Builder.Default
+    private Long offerStartNumber = 1L;
+
+    @Column(name = "document_separator")
+    @Builder.Default
+    private String documentSeparator = "-";
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -3,10 +3,12 @@ package com.profitmap_backend.service;
 import com.profitmap_backend.config.MailProperties;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.lang.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,13 +21,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class MailService {
 
     private final JavaMailSender mailSender;
     private final MailTemplateService mailTemplateService;
     private final MailProperties mailProperties;
+    
+    @Value("${spring.mail.username}")
+    private String smtpUsername;
+
+    @Autowired(required = false)
+    @Qualifier("secondMailSender")
+    private JavaMailSender secondMailSender;
+
+    public MailService(
+            JavaMailSender mailSender,
+            MailTemplateService mailTemplateService,
+            MailProperties mailProperties) {
+        this.mailSender = mailSender;
+        this.mailTemplateService = mailTemplateService;
+        this.mailProperties = mailProperties;
+    }
 
     /**
      * Example usage:
@@ -58,9 +75,23 @@ public class MailService {
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlBody, true);
-            helper.setFrom(mailProperties.getSystemFromAddress(), mailProperties.getAppName());
+            
+            // Use SMTP username as From address to match Zoho's requirements
+            // Zoho requires the From address to match the authenticated SMTP username
+            // The mail.smtp.from property in application.yml sets the envelope sender (MAIL FROM)
+            String fromAddress = smtpUsername != null && !smtpUsername.isEmpty() 
+                    ? smtpUsername 
+                    : mailProperties.getSystemFromAddress();
+            
+            if (fromAddress == null || fromAddress.isEmpty()) {
+                fromAddress = "hello@profitmap.app"; // Fallback to default
+            }
+            
+            helper.setFrom(fromAddress, mailProperties.getAppName());
+            log.debug("Sending system email from {} to {}", fromAddress, to);
 
             mailSender.send(message);
+            log.debug("Successfully sent system email to {}", to);
         } catch (MessagingException | MailException | UnsupportedEncodingException ex) {
             log.error("Failed to send system email to {}", to, ex);
             throw new IllegalStateException("Failed to send system email", ex);
@@ -105,6 +136,42 @@ public class MailService {
             log.error("Failed to send email with attachment to {}", to, ex);
             throw new IllegalStateException("Failed to send email with attachment", ex);
         }
+    }
+
+    /**
+     * Sends HTML email with PDF attachment using a template.
+     * This is a convenience method that renders the template and then sends the email.
+     * 
+     * @param to Recipient email address
+     * @param subject Email subject
+     * @param templateName Name of the template (without .html extension)
+     * @param templateVariables Variables to be used in the template
+     * @param pdfBytes PDF file content as byte array
+     * @param pdfFileName Name of the PDF file attachment
+     * @param replyTo Optional reply-to email address
+     * @param fromPersonalName Optional sender personal name
+     */
+    @Async
+    public void sendHtmlMailWithPdfAttachment(
+            String to,
+            String subject,
+            String templateName,
+            Map<String, Object> templateVariables,
+            byte[] pdfBytes,
+            String pdfFileName,
+            @Nullable String replyTo,
+            @Nullable String fromPersonalName
+    ) {
+        String htmlBody = mailTemplateService.render(templateName, templateVariables);
+        sendHtmlMailWithPdfAttachment(
+                to,
+                subject,
+                htmlBody,
+                pdfBytes,
+                pdfFileName,
+                replyTo,
+                fromPersonalName
+        );
     }
 
     @Async
@@ -173,6 +240,133 @@ public class MailService {
 
         String htmlBody = mailTemplateService.render("activation-email", variables);
         sendSystemHtmlMail("dominikkniewald@gmail.com", subject, htmlBody);
+    }
+
+    /**
+     * Sends HTML email using the second mail account (if configured).
+     * Falls back to primary account if second account is not configured.
+     */
+    @Async
+    public void sendHtmlMailWithSecondAccount(
+            String to,
+            String subject,
+            String htmlBody,
+            @Nullable String fromPersonalName
+    ) {
+        JavaMailSender sender = (secondMailSender != null) ? secondMailSender : mailSender;
+        String fromAddress = (mailProperties.getSecondAccount() != null && 
+                             mailProperties.getSecondAccount().getFromAddress() != null)
+                ? mailProperties.getSecondAccount().getFromAddress()
+                : mailProperties.getFromAddress();
+
+        try {
+            MimeMessage message = sender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(
+                    message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name()
+            );
+
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true);
+
+            String personalName = (fromPersonalName != null && !fromPersonalName.isBlank())
+                    ? fromPersonalName
+                    : mailProperties.getAppName();
+            helper.setFrom(fromAddress, personalName);
+
+            sender.send(message);
+        } catch (MessagingException | MailException | UnsupportedEncodingException ex) {
+            log.error("Failed to send email with second account to {}", to, ex);
+            throw new IllegalStateException("Failed to send email with second account", ex);
+        }
+    }
+
+    /**
+     * Sends HTML email with PDF attachment using the second mail account (if configured).
+     * Falls back to primary account if second account is not configured.
+     */
+    @Async
+    public void sendHtmlMailWithPdfAttachmentSecondAccount(
+            String to,
+            String subject,
+            String htmlBody,
+            byte[] pdfBytes,
+            String pdfFileName,
+            @Nullable String replyTo,
+            @Nullable String fromPersonalName
+    ) {
+        JavaMailSender sender = (secondMailSender != null) ? secondMailSender : mailSender;
+        String fromAddress = (mailProperties.getSecondAccount() != null && 
+                             mailProperties.getSecondAccount().getFromAddress() != null)
+                ? mailProperties.getSecondAccount().getFromAddress()
+                : mailProperties.getFromAddress();
+
+        try {
+            MimeMessage message = sender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(
+                    message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name()
+            );
+
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true);
+
+            String personalName = (fromPersonalName != null && !fromPersonalName.isBlank())
+                    ? fromPersonalName
+                    : mailProperties.getAppName();
+            helper.setFrom(fromAddress, personalName);
+
+            if (replyTo != null && !replyTo.isBlank()) {
+                helper.setReplyTo(replyTo);
+            }
+
+            helper.addAttachment(pdfFileName, new ByteArrayResource(pdfBytes));
+
+            sender.send(message);
+        } catch (MessagingException | MailException | UnsupportedEncodingException ex) {
+            log.error("Failed to send email with attachment using second account to {}", to, ex);
+            throw new IllegalStateException("Failed to send email with attachment using second account", ex);
+        }
+    }
+
+    /**
+     * Sends HTML email with PDF attachment using the second mail account (if configured) with a template.
+     * Falls back to primary account if second account is not configured.
+     * 
+     * @param to Recipient email address
+     * @param subject Email subject
+     * @param templateName Name of the template (without .html extension)
+     * @param templateVariables Variables to be used in the template
+     * @param pdfBytes PDF file content as byte array
+     * @param pdfFileName Name of the PDF file attachment
+     * @param replyTo Optional reply-to email address
+     * @param fromPersonalName Optional sender personal name
+     */
+    @Async
+    public void sendHtmlMailWithPdfAttachmentSecondAccount(
+            String to,
+            String subject,
+            String templateName,
+            Map<String, Object> templateVariables,
+            byte[] pdfBytes,
+            String pdfFileName,
+            @Nullable String replyTo,
+            @Nullable String fromPersonalName
+    ) {
+        String htmlBody = mailTemplateService.render(templateName, templateVariables);
+        sendHtmlMailWithPdfAttachmentSecondAccount(
+                to,
+                subject,
+                htmlBody,
+                pdfBytes,
+                pdfFileName,
+                replyTo,
+                fromPersonalName
+        );
     }
 }
 

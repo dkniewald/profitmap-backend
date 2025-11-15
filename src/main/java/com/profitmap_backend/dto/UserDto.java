@@ -1,6 +1,7 @@
 package com.profitmap_backend.dto;
 
 import com.profitmap_backend.model.UserRole;
+import com.profitmap_backend.model.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class UserDto {
     private LocalDate dateOfBirth;
     private String phoneNumber;
     private Long companyId;
+    private UserStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Set<UserRole> roles;

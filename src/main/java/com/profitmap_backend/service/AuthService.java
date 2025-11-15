@@ -2,8 +2,11 @@ package com.profitmap_backend.service;
 
 import com.profitmap_backend.dto.UserDto;
 import com.profitmap_backend.model.Company;
+import com.profitmap_backend.model.CompanyStatus;
+import com.profitmap_backend.model.TokenType;
 import com.profitmap_backend.model.User;
 import com.profitmap_backend.model.UserRole;
+import com.profitmap_backend.model.UserStatus;
 import com.profitmap_backend.repository.UserRepository;
 import com.profitmap_backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final TokenService tokenService;
 
     public ResponseEntity<?> register(Object registerRequestObj) {
         // Cast to RegisterRequest
@@ -52,14 +56,21 @@ public class AuthService {
                 .country(registerRequest.getCountry())
                 .dateOfBirth(dob)
                 .phoneNumber(registerRequest.getPhoneNumber())
+                .status(UserStatus.PENDING)
                 .build();
         user.getRoles().add(UserRole.USER);
         userRepository.save(user);
+        
+        // Create activation token and send email
+        String activationToken = tokenService.createToken(user, TokenType.ACCOUNT_ACTIVATION);
+        tokenService.sendTokenEmail(user, TokenType.ACCOUNT_ACTIVATION, "activation?token=", activationToken);
+        
         String token = jwtUtil.generateToken(user);
         UserDto userDto = new UserDto(
             user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(),
             user.getCountry(), user.getDateOfBirth(), user.getPhoneNumber(),
             user.getCompany() != null ? user.getCompany().getId() : null,
+            user.getStatus(),
             user.getCreatedAt(), user.getUpdatedAt(),
             user.getRoles()
         );
@@ -80,15 +91,24 @@ public class AuthService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
 
+        // Check user status
+        if (user.getStatus() != UserStatus.ACTIVE) {
+            if (user.getStatus() == UserStatus.PENDING) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Your account is pending activation. Please check your email to activate your account.");
+            } else if (user.getStatus() == UserStatus.INACTIVE) {
+                return ResponseEntity.status(HttpStatus.GONE).body("Your account is inactive. Please contact ProfitMap team for support on hello@profitmap.app");
+            }
+        }
+
         Company c = user.getCompany();
 
         if (c != null){
-            if (!c.getIsActive()){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Your account is currently not active, please contact ProfitMap team for support.");
+            if (c.getStatus() != CompanyStatus.ACTIVE){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Your company is currently not active, please contact ProfitMap team for supporton hello@profitmap.app");
             }
 
             if (c.getIsDemo() && c.getDemoExpiration() != null && c.getDemoExpiration().isBefore(LocalDateTime.now())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Demo period expired, please contact ProfitMap team for support.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Demo period expired, please contact ProfitMap team for support on hello@profitmap.app");
             }
         }
 
@@ -98,6 +118,7 @@ public class AuthService {
             user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(),
             user.getCountry(), user.getDateOfBirth(), user.getPhoneNumber(),
             user.getCompany() != null ? user.getCompany().getId() : null,
+            user.getStatus(),
             user.getCreatedAt(), user.getUpdatedAt(),
             user.getRoles()
         );
